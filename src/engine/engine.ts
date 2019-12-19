@@ -52,6 +52,8 @@ export class Engine {
   public removeEntity(entity: Entity) {
     entity.deinitialize(this)
 
+    this.app.stage.removeChild(entity.graphics)
+
     this.entities = this.entities.filter((e) => e !== entity)
   }
 

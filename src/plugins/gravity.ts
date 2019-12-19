@@ -1,7 +1,15 @@
 import { Engine, Plugin } from '~/engine'
 
+interface GravityPluginOptions {
+  intensity: number
+}
+
 export class GravityPlugin extends Plugin {
   private distance = Math.pow(42, 2)
+
+  constructor(private options: GravityPluginOptions) {
+    super()
+  }
 
   public update(engine: Engine) {
     for (let i = 0; i < engine.entities.length; i++) {
@@ -22,7 +30,7 @@ export class GravityPlugin extends Plugin {
           .subtractVec(a.position)
           .normalize()
           .divide(distance, distance)
-          .multiply(10, 10)
+          .multiply(this.options.intensity, this.options.intensity)
 
         a.velocity.addVec(direction)
       }

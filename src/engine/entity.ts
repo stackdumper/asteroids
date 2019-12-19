@@ -4,7 +4,7 @@ import { Vec2, AABB } from '~/math'
 
 export abstract class Entity {
   public position: Vec2 = new Vec2(0, 0)
-  public velocity: Vec2 = new Vec2(Math.random() * 6 - 3, Math.random() * 6 - 3)
+  public velocity: Vec2 = new Vec2(0, 0)
 
   public aabb: AABB
   public graphics: PIXI.Graphics
@@ -18,7 +18,9 @@ export abstract class Entity {
     }
   }
 
-  public deinitialize(engine: Engine) {}
+  public deinitialize(engine: Engine) {
+    this.graphics.destroy()
+  }
 
   public update(engine: Engine, dt: number) {
     this.position.add(this.velocity.x * dt, this.velocity.y * dt)
