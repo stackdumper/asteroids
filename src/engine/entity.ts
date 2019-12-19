@@ -1,31 +1,31 @@
 import * as PIXI from 'pixi.js'
 import { Engine } from '~/engine'
-import { Vec2 } from '~/math'
+import { Vec2, AABB } from '~/math'
 
 export abstract class Entity {
-  public graphics: PIXI.Graphics = new PIXI.Graphics()
   public position: Vec2 = new Vec2(0, 0)
-  public velocity: Vec2 = new Vec2(0, 0)
+  public velocity: Vec2 = new Vec2(Math.random() * 6 - 3, Math.random() * 6 - 3)
 
-  public initialize(engine: Engine) {}
+  public aabb: AABB
+  public graphics: PIXI.Graphics
+
+  public initialize(engine: Engine) {
+    if (!this.graphics) {
+      this.graphics = new PIXI.Graphics()
+        .beginFill(0xffffff)
+        .drawRect(this.aabb.min.x, this.aabb.min.y, this.aabb.max.x, this.aabb.max.y)
+        .endFill()
+    }
+  }
 
   public deinitialize(engine: Engine) {}
 
   public update(engine: Engine, dt: number) {
     this.position.add(this.velocity.x * dt, this.velocity.y * dt)
 
-    this.graphics.position.set(this.position.x - 16, this.position.y - 16)
-  }
-
-  public collides(other: Entity) {
-    const b1 = this.graphics.getBounds()
-    const b2 = other.graphics.getBounds()
-
-    return (
-      b1.x + b1.width > b2.x &&
-      b1.x < b2.x + b2.width &&
-      b1.y + b1.height > b2.y &&
-      b1.y < b2.y + b2.height
+    this.graphics.position.set(
+      this.position.x - this.aabb.halfMax.x,
+      this.position.y - this.aabb.halfMax.y,
     )
   }
 }

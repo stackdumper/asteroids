@@ -1,30 +1,58 @@
 export class Vec2 {
   constructor(public x: number, public y: number) {}
 
-  public add = (x: number, y: number) => {
+  public add(x: number, y: number) {
     this.x += x
     this.y += y
 
     return this
   }
 
-  public subtract = (x: number, y: number) => {
+  public addVec(vec: Vec2) {
+    this.x += vec.x
+    this.y += vec.y
+
+    return this
+  }
+
+  public subtract(x: number, y: number) {
     this.x -= x
     this.y -= y
 
     return this
   }
 
-  public multiply = (x: number, y: number) => {
+  public subtractVec(vec: Vec2) {
+    this.x -= vec.x
+    this.y -= vec.y
+
+    return this
+  }
+
+  public multiply(x: number, y: number) {
     this.x *= x
     this.y *= y
 
     return this
   }
 
-  public divide = (x: number, y: number) => {
+  public multiplyVec(vec: Vec2) {
+    this.x *= vec.x
+    this.y *= vec.y
+
+    return this
+  }
+
+  public divide(x: number, y: number) {
     this.x /= x
     this.y /= y
+
+    return this
+  }
+
+  public divideVec = (vec: Vec2) => {
+    this.x /= vec.x
+    this.y /= vec.y
 
     return this
   }
@@ -59,6 +87,10 @@ export class Vec2 {
 
   public distance(vec: Vec2) {
     return Math.sqrt(this.distanceSquared(vec))
+  }
+
+  public dot(vec: Vec2) {
+    return this.x * vec.x + this.y * vec.y
   }
 
   public clone() {
