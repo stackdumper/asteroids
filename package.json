@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel serve -d docs -p 8080 src/index.html",
-    "build": "parcel build -d docs src/index.html",
+    "build": "parcel build -d docs --public-url './' src/index.html",
     "format": "prettier --write './!(node_modules|dist)/**/*.ts'"
   },
   "devDependencies": {
