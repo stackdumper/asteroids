@@ -3,25 +3,21 @@ import { Entity } from '~/engine'
 import { AABB, Vec2 } from '~/math'
 
 export class BombEntity extends Entity {
-  public aabb = new AABB(new Vec2(0, 0), new Vec2(4, 4))
+  public aabb = new AABB(new Vec2(0, 0), new Vec2(16, 16))
   public triggered = false
 
-  constructor(
-    x: number,
-    y: number,
-    vx: number,
-    vy: number,
-    color = 0xff0000,
-    public power = 25,
-    public counter = 100,
-  ) {
+  constructor(public power = 25, public counter = 100) {
     super()
 
-    this.position.set(x, y)
-    this.velocity.set(vx, vy)
     this.graphics = new PIXI.Graphics()
-      .beginFill(color)
-      .drawRect(this.aabb.min.x, this.aabb.min.y, this.aabb.max.x, this.aabb.max.y)
+      .beginFill(0xf22b29)
+      .drawRoundedRect(
+        this.aabb.min.x,
+        this.aabb.min.y,
+        this.aabb.max.x,
+        this.aabb.max.y,
+        2,
+      )
       .endFill()
   }
 

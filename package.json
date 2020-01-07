@@ -5,8 +5,8 @@
   "author": "Ilya Atamas <stackdumper@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel serve -p 8080 src/index.html",
-    "build": "parcel build src/index.html",
+    "start": "parcel serve -d docs -p 8080 src/index.html",
+    "build": "parcel build -d docs src/index.html",
     "format": "prettier --write './!(node_modules|dist)/**/*.ts'"
   },
   "devDependencies": {
@@ -16,6 +16,7 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
+    "pixi-viewport": "^4.5.0",
     "pixi.js": "^5.2.0"
   }
 }

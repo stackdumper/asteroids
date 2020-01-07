@@ -8,6 +8,7 @@ export abstract class Entity {
 
   public aabb: AABB
   public graphics: PIXI.Graphics
+  public mass = 1
 
   public initialize(engine: Engine) {
     if (!this.graphics) {

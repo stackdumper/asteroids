@@ -5,7 +5,7 @@ interface GravityPluginOptions {
 }
 
 export class GravityPlugin extends Plugin {
-  private distance = Math.pow(42, 2)
+  private distance = Math.pow(18, 2)
 
   constructor(private options: GravityPluginOptions) {
     super()
@@ -31,6 +31,7 @@ export class GravityPlugin extends Plugin {
           .normalize()
           .divide(distance, distance)
           .multiply(this.options.intensity, this.options.intensity)
+          .multiply(b.mass, b.mass)
 
         a.velocity.addVec(direction)
       }

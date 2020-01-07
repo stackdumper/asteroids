@@ -1,8 +1,10 @@
+import { Viewport } from 'pixi-viewport'
 import * as PIXI from 'pixi.js'
 import { Entity, Plugin } from '.'
 
 export class Engine {
   public app: PIXI.Application
+  public viewport: Viewport
   public entities: Entity[]
   public plugins: Plugin[]
 
@@ -11,7 +13,23 @@ export class Engine {
     this.app = new PIXI.Application({
       antialias: true,
       resolution: 1,
+      backgroundColor: 0x070707,
     })
+    this.viewport = new Viewport({
+      screenWidth: window.innerWidth,
+      screenHeight: window.innerHeight,
+      worldWidth: 1000,
+      worldHeight: 1000,
+
+      interaction: this.app.renderer.plugins.interaction, // the interaction module is important for wheel to work properly when renderer.view is placed or scaled
+    })
+    this.viewport
+      .drag()
+      .pinch()
+      .wheel()
+      .decelerate()
+
+    this.app.stage.addChild(this.viewport)
 
     // initialize entities and plugins
     this.entities = []
@@ -22,7 +40,6 @@ export class Engine {
     element.appendChild(this.app.view)
 
     this.app.resizeTo = element
-
     this.app.resize()
   }
 
@@ -46,13 +63,13 @@ export class Engine {
 
     this.entities.push(entity)
 
-    this.app.stage.addChild(entity.graphics)
+    this.viewport.addChild(entity.graphics)
   }
 
   public removeEntity(entity: Entity) {
     entity.deinitialize(this)
 
-    this.app.stage.removeChild(entity.graphics)
+    this.viewport.removeChild(entity.graphics)
 
     this.entities = this.entities.filter((e) => e !== entity)
   }

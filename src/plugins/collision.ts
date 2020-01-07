@@ -10,17 +10,27 @@ export class CollisionPlugin extends Plugin {
     super()
   }
 
+  private limit = Math.pow(20, 2)
+
   public update(engine: Engine, dt: number) {
-    for (const e1 of engine.entities) {
+    for (let i = 0; i < engine.entities.length; i++) {
+      const e1 = engine.entities[i]
       const a = e1.aabb.offset(e1.position)
 
-      for (const e2 of engine.entities) {
-        if (e1 === e2) continue
+      for (let j = 0; j < engine.entities.length; j++) {
+        if (i === j) continue
+
+        const e2 = engine.entities[j]
+
+        // hack
+        if (e1.position.distanceSquared(e2.position) > this.limit) continue
 
         const b = e2.aabb.offset(e2.position)
 
         if (a.collides(b)) {
           const manifold = b.getManifold(a)
+
+          if (!manifold) continue
 
           const relativeVelocity = e2.velocity.clone().subtractVec(e1.velocity)
           const normalVector = relativeVelocity.dot(manifold.normal)
